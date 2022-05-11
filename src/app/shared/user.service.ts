@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import {  FormBuilder, Validators, FormGroup } from '@angular/forms';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Injectable({
@@ -33,7 +33,19 @@ export class UserService {
     return this.http.post(this.BaseURI + '/Authenticate/login', formData);
   }
   getUserProfile() {
-    var tokenHeader = new HttpHeaders({'Authorization':'Bearer '+localStorage.getItem('token')})
-    return this.http.get(this.BaseURI + '/UserProfile', {headers: tokenHeader});
+    return this.http.get(this.BaseURI + '/UserProfile');
+  }
+
+  HaveAccess(){
+    var loggintoken=localStorage.getItem('token')||'';
+    var _extractedtoken=loggintoken.split('.')[1];
+    var _atobdata=atob(_extractedtoken);
+    var _finaldata=JSON.parse(_atobdata);
+    if(_finaldata.role=='Admin'){
+      return true
+    }else{
+      alert('you not having access');
+      return false
+    }
   }
 }
