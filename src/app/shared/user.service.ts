@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
 import {  FormBuilder, Validators, FormGroup } from '@angular/forms';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { Observable, observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  updateCategories(val: { catId: string; categoryName: string; }) {
+    throw new Error('Method not implemented.');
+  }
+  addCategories(val: { catId: string; categoryName: string; }) {
+    throw new Error('Method not implemented.');
+  }
 
   constructor(private fb:FormBuilder,private http:HttpClient) { }
   readonly BaseURI = 'http://localhost:37968/api';
@@ -47,5 +54,43 @@ export class UserService {
       alert('you not having access');
       return false
     }
+  }
+
+  // getCateList():Observable<any[]>{
+  //   return this.http.get<any>(this.BaseURI+'/categories');
+  // }
+
+  getCateList(){
+    return this.http.get<any>(this.BaseURI+'/categories');
+  }
+
+ 
+
+  addCateList(val:any){
+    return this.http.post<any>(this.BaseURI+'/categories',val);
+  }
+
+  updateCateList(val:any){
+    return this.http.put<any>(this.BaseURI+'/categories',val);
+  }
+
+  deleteCateList(catId:string):Observable<number>{
+    return this.http.delete<number>(this.BaseURI+'/categories/'+catId);
+  }
+
+  getProductList():Observable<any[]>{
+    return this.http.get<any>(this.BaseURI+'/Items');
+  }
+
+  addProductList(val:any){
+    return this.http.get<any>(this.BaseURI+'/Items',val);
+  }
+
+  updateProductList(val:any){
+    return this.http.get<any>(this.BaseURI+'/Items',val);
+  }
+
+  deleteProductList(val:any){
+    return this.http.get<any>(this.BaseURI+'/Items/',val);
   }
 }

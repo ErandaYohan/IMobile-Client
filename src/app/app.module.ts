@@ -15,6 +15,14 @@ import { HomeComponent } from './home/home.component';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { CategiesComponent } from './admin-panel/categies/categies.component';
+import { AddEditCateComponent } from './admin-panel/categies/add-edit-cate/add-edit-cate.component';
+import { ShowCateComponent } from './admin-panel/categies/show-cate/show-cate.component';
+import { ProductComponent } from './admin-panel/product/product.component';
+import { AddEditProductComponent } from './admin-panel/product/add-edit-product/add-edit-product.component';
+import { ShowProductComponent } from './admin-panel/product/show-product/show-product.component';
+
+
 
 @NgModule({
   declarations: [
@@ -24,7 +32,14 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
     LoginComponent,
     HomeComponent,
     AdminPanelComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    CategiesComponent,
+    AddEditCateComponent,
+    ShowCateComponent,
+    ProductComponent,
+    AddEditProductComponent,
+    ShowProductComponent
+    
   ],
   imports: [
     BrowserModule,
