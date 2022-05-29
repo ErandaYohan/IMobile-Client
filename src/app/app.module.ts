@@ -21,6 +21,7 @@ import { ShowCateComponent } from './admin-panel/categies/show-cate/show-cate.co
 import { ProductComponent } from './admin-panel/product/product.component';
 import { AddEditProductComponent } from './admin-panel/product/add-edit-product/add-edit-product.component';
 import { ShowProductComponent } from './admin-panel/product/show-product/show-product.component';
+import { CartComponent } from './home/cart/cart.component';
 
 
 
@@ -38,7 +39,8 @@ import { ShowProductComponent } from './admin-panel/product/show-product/show-pr
     ShowCateComponent,
     ProductComponent,
     AddEditProductComponent,
-    ShowProductComponent
+    ShowProductComponent,
+    CartComponent
     
   ],
   imports: [

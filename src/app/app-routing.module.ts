@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { RoleGuard } from './auth/role.guard';
 import { CategiesComponent } from './admin-panel/categies/categies.component';
 import { ProductComponent } from './admin-panel/product/product.component';
+import { CartComponent } from './home/cart/cart.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'/user/login',pathMatch:'full'},
@@ -25,7 +26,8 @@ const routes: Routes = [
   {path:'forbidden',component:ForbiddenComponent},
   {path:'adminpanel',component:AdminPanelComponent,canActivate:[RoleGuard],},
   { path: 'category', component: CategiesComponent },
-  { path: 'product', component: ProductComponent }
+  { path: 'product', component: ProductComponent },
+  { path: 'cart', component: CartComponent }
 ];
 
 @NgModule({
