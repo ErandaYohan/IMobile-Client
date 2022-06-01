@@ -53,12 +53,19 @@ console.log(sum)
   }
 
 
-  removeItem(item: any) {
-    this.cartService.removeCartItem(item);
+  removeItem(item:ProductList) {
+    
+    const found = this.ProductList.find(e => e.pId == item.pId);
+    const index: number = this.ProductList.indexOf(item);
+    alert(index);
+    if (index !== -1) {
+      this.ProductList.splice(index, 1);
+    } 
+    sessionStorage.setItem("addtocart",JSON.stringify(ProductList))
   }
 
   emptycart() {
-    this.cartService.removeAllCart();
+    sessionStorage.removeItem("addtocart")
   }
 
   api() {
@@ -92,6 +99,11 @@ console.log(sum)
   
   
   }
+  
     
 
 }
+function addtocart(addtocart: any) {
+  throw new Error('Function not implemented.');
+}
+

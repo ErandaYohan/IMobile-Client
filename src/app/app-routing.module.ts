@@ -11,6 +11,7 @@ import { RoleGuard } from './auth/role.guard';
 import { CategiesComponent } from './admin-panel/categies/categies.component';
 import { ProductComponent } from './admin-panel/product/product.component';
 import { CartComponent } from './home/cart/cart.component';
+import { LoginRegisterComponent } from './user/login-register/login-register.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'/user/login',pathMatch:'full'},
@@ -22,11 +23,17 @@ const routes: Routes = [
       
     ]
   },
+  {path:'loginandRegister',component:LoginRegisterComponent},
   {path:'home',component:HomeComponent,canActivate:[AuthGuard]},
   {path:'forbidden',component:ForbiddenComponent},
-  {path:'adminpanel',component:AdminPanelComponent,canActivate:[RoleGuard],},
-  { path: 'category', component: CategiesComponent },
-  { path: 'product', component: ProductComponent },
+  {
+    path:'adminpanel',component:AdminPanelComponent,canActivate:[RoleGuard],
+    children:[
+      { path: 'category', component: CategiesComponent },
+      { path: 'product', component: ProductComponent }
+    ]
+  },
+  
   { path: 'cart', component: CartComponent }
 ];
 

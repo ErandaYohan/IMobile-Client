@@ -53,7 +53,7 @@ export class UserService {
     if (_finaldata.role == 'Admin') {
       return true
     } else {
-      alert('you not having access');
+      // alert('you not having access');
       return false
     }
   }

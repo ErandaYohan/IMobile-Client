@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ProductList } from '../DTO/ProductDTO';
 import { UserDto } from '../DTO/userDTO';
 
 @Injectable({
@@ -11,6 +12,7 @@ export class CartService {
   public cartItemList: any = []
 
   public productList = new BehaviorSubject<any>([]);
+  ProductList: Array<ProductList>=[];
   public search = new BehaviorSubject<string>("");
 
   constructor(private http: HttpClient) { }
@@ -37,9 +39,9 @@ export class CartService {
     })
     return grandTotal;
   }
-  removeCartItem(product: any) {
+  removeCartItem(ProductList: any) {
     this.cartItemList.map((a: any, index: any) => {
-      if (product.id === a.id) {
+      if (ProductList.pId === a.pId) {
         this.cartItemList.splice(index, 1);
       }
     })

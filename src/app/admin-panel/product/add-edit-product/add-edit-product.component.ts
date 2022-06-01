@@ -48,7 +48,7 @@ export class AddEditProductComponent implements OnInit {
       category:this.category};
     this.service.addProductList(val).subscribe(res=>{
       alert(res.toString());
-      // console.log(val)
+      console.log(val)
     });
   }
 

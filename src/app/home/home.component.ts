@@ -6,6 +6,7 @@ import { CartService } from '../shared/cart.service';
 import { __asyncDelegator } from 'tslib';
 import { elementAt } from 'rxjs';
 import { UserDto } from '../DTO/userDTO';
+import { Toast, ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { UserDto } from '../DTO/userDTO';
 export class HomeComponent implements OnInit {
   userDetails!: UserDto;
   total: any;
-  constructor(private router: Router, private service: UserService, private cartService: CartService) { }
+  constructor(private router: Router, private service: UserService, private cartService: CartService, private toast: ToastrService) { }
 
   ProductList: Array<ProductList> = [];
   addTocart: Array<ProductList> = [];
@@ -25,10 +26,11 @@ export class HomeComponent implements OnInit {
   ActivateAddEditCartComp: boolean = false;
   Product: any;
   cart: any;
-
+  hiddenData: any;
   ngOnInit() {
-    this.userDetails=new UserDto();
-
+    this.userDetails = new UserDto();
+    // this.service.HaveAccess();
+    this.HiddenFromUser();
     // if( sessionStorage.getItem("addtocart") != undefined){
     //     // this.gTotal=0;
     // let data =sessionStorage.getItem("addtocart");
@@ -41,7 +43,7 @@ export class HomeComponent implements OnInit {
 
     this.service.getUserProfile().subscribe(
       res => {
-        this.userDetails =res;
+        this.userDetails = res;
         console.log(JSON.stringify(res));
         sessionStorage.setItem("userId", this.userDetails.id)
       },
@@ -53,6 +55,11 @@ export class HomeComponent implements OnInit {
     this.ShowProductList();
   }
 
+  HiddenFromUser() {
+    // let 
+    this.hiddenData = this.service.HaveAccess()
+    // console.log("asdsadasd"+this.hiddenData) 
+  }
 
   onLogout() {
     localStorage.removeItem('token');
@@ -73,71 +80,66 @@ export class HomeComponent implements OnInit {
 
   }
   addtocart(dataItem: ProductList) {
-    // alert(dataItem.productName)
-    // alert(JSON.stringify(this.ProductList))
-    let ProductList: Array<ProductList> = [];
-    let data = sessionStorage.getItem("addtocart");
-
-
-   
-
-    if (data != undefined || data != null) {
-      ProductList = JSON.parse(data);
-      const found = ProductList.find(e => e.pId == dataItem.pId);
-     
-      if(found){
-
-        let arraytot= (found.qty+dataItem.qty);
-        // console.log("found" + (found.qty+dataItem.qty));
-        found.qty=arraytot;
-        // ProductList.push(found);
-        let total = (dataItem.pPrice *arraytot);
-        dataItem.total = total;
-        // ProductList.push(dataItem);
-        sessionStorage.setItem('addtocart', JSON.stringify(ProductList));
-        console.log("sssssss "+JSON.stringify(ProductList));
-        // const index: number = ProductList.indexOf(found);
-        // if (index !== -1) {
-        //   ProductList.splice(index, 1);
-        // }
-
-        
-        // let total = (dataItem.pPrice * dataItem.qty);
-        // dataItem.total = total;
-        
-
-      }else{
+    if (dataItem.qty > 0) {
+      let ProductList: Array<ProductList> = [];
+      let data = sessionStorage.getItem("addtocart");
+      alert(data);
+      ProductList = JSON.parse(data || '{}');
+      console.log("testinggggg " + ProductList)
+      if (data == undefined || data == null) {
+        alert("checkiinn")
+      }
+      if (data == undefined || data == null) 
+      {
+        alert("1")
         let total = (dataItem.pPrice * dataItem.qty);
-      dataItem.total = total;
-      ProductList.push(dataItem);
-      sessionStorage.setItem('addtocart', JSON.stringify(ProductList));
-      console.log("!!!!!" + JSON.stringify(JSON.stringify(ProductList)));
+        dataItem.total = total;
+        ProductList.push(dataItem);
+        sessionStorage.setItem('addtocart', JSON.stringify(ProductList));
+        this.toast.success("Product Added" + dataItem.productName);
+        console.log("!!!!!" + JSON.stringify(JSON.stringify(dataItem.pPrice + " NULL array else change " + dataItem.qty)));
+        console.log("!!!!!" + JSON.stringify(JSON.stringify("  NULL array else change " + total)));
+        console.log("NULL array else change" + JSON.stringify(JSON.stringify(ProductList)));
+        
+
+      } else {
+        alert("2")
+       // ProductList = JSON.parse(data);
+       const found = ProductList.find(e => e.pId == dataItem.pId);
+
+       if (found) {
+         let arraytot = (found.qty + dataItem.qty);
+         found.qty = arraytot;
+         let total = (dataItem.pPrice * arraytot);
+         found.total = total;
+         // ProductList.push(dataItem);
+         sessionStorage.setItem('addtocart', JSON.stringify(ProductList));
+         this.toast.success("Qty Updated " + dataItem.productName);
+         console.log("!!!!!" + JSON.stringify(JSON.stringify(dataItem.pPrice + " if change " + dataItem.qty)));
+         console.log("!!!!!" + JSON.stringify(JSON.stringify("  if change " + total)));
+         console.log("if change " + JSON.stringify(ProductList));
+
+
+       } else {
+         let total = (dataItem.pPrice * dataItem.qty);
+         dataItem.total = total;
+         ProductList.push(dataItem);
+         sessionStorage.setItem('addtocart', JSON.stringify(ProductList));
+         this.toast.success("Product Added " + dataItem.productName)
+         console.log("!!!!!" + JSON.stringify(JSON.stringify(dataItem.pPrice + " else change " + dataItem.qty)));
+         console.log("!!!!!" + JSON.stringify(JSON.stringify(" else change " + total)));
+         console.log("else change " + JSON.stringify(ProductList));
+       }
+
       }
 
-      
-      // if (ProductList.includes(dataItem)) {
-      //   alert("includes");
-      //   const index: number = ProductList.indexOf(dataItem);
-      //   if (index !== -1) {
-      //     ProductList.splice(index, 1);
-      //   }
-      // }else{
-      //   alert("not include")
-      // }
-    
-    }else{
-      let total = (dataItem.pPrice * dataItem.qty);
-      dataItem.total = total;
-      ProductList.push(dataItem);
-      sessionStorage.setItem('addtocart', JSON.stringify(ProductList));
-      console.log("!!!!!" + JSON.stringify(JSON.stringify(ProductList)));
-      // alert(JSON.stringify(JSON.stringify(this.ProductList)))
     }
-    
-   
+
+    else {
+      this.toast.warning("Please enter Qty " + dataItem.productName)
 
 
-
+    }
 
   }
 }

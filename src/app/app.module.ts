@@ -22,6 +22,7 @@ import { ProductComponent } from './admin-panel/product/product.component';
 import { AddEditProductComponent } from './admin-panel/product/add-edit-product/add-edit-product.component';
 import { ShowProductComponent } from './admin-panel/product/show-product/show-product.component';
 import { CartComponent } from './home/cart/cart.component';
+import { LoginRegisterComponent } from './user/login-register/login-register.component';
 
 
 
@@ -40,7 +41,8 @@ import { CartComponent } from './home/cart/cart.component';
     ProductComponent,
     AddEditProductComponent,
     ShowProductComponent,
-    CartComponent
+    CartComponent,
+    LoginRegisterComponent
     
   ],
   imports: [
